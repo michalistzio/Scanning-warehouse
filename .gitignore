@@ -2,5 +2,4 @@
 
 /Backend/node_modules
 
-/Backend/app.js
 /Backend/util-helpers/db.js
