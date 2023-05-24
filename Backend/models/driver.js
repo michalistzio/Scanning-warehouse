@@ -8,14 +8,14 @@ const Driver = sequelize.define('driver', {
         primaryKey: true,
         allowNull: false,
     },
-    clusterId: {
-        type: DataTypes.STRING,
-        allowNull:false,
-        reference: {
-            model: Cluster,
-            key: 'id',
-        }
-    },
+    // clusterId: {
+    //     type: DataTypes.STRING,
+    //     allowNull:false,
+    //     reference: {
+    //         model: Cluster,
+    //         key: 'id',
+    //     }
+    // },
 },{
      // Disable timestamps
     timestamps: false,

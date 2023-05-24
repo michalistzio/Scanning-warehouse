@@ -10,6 +10,11 @@ const Package = sequelize.define('package', {
     postcode: {
         type: DataTypes.INTEGER,
         allowNull: false,
+    },
+    status: {
+        type: DataTypes.ENUM('PENDING', 'SCANNED'),
+        allowNull: false,
+        defaultValue: 'PENDING',
     }
 },{
     // Disable timestamps

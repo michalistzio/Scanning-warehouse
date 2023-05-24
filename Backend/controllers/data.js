@@ -32,8 +32,7 @@ exports.reset = async(req, res, next) => {
 
     try{
         await Cluster.destroy({
-            where: {},
-            truncate: true
+            where: {}
           });
         await Driver.destroy({
             where: {},
