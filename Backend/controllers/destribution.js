@@ -7,16 +7,17 @@ const { validationResult } = require('express-validator');
 
 exports.putScan = async (req, res, next) => {
 
+    //check for validation of voucher
     const errors = validationResult(req);
     if (!errors.isEmpty()){
         const err = new Error('Validation Failed, entered data is incorrect.');
-        //422 for validation error
         err.statusCode = 422;
         return next(err);
     }
 
     const voucher = req.body.voucher;
     try{
+        //find the package with voucher
         const scaned = await Package.findByPk(voucher)
         
         if (!scaned){
@@ -25,12 +26,14 @@ exports.putScan = async (req, res, next) => {
             throw error;
         }
 
+        //if the package has scanned it can not scanned again
         if (scaned.dataValues.status == Status.SCANNED){
             const error = new Error(`The item has already scanned!`);
             error.statusCode = 404;
             throw error;
         }
 
+        //if voucher is OK and the package has not scanned. then package scanned
         await Package.update({status: Status.SCANNED}, {
             where: {voucher: voucher}
         })
@@ -59,6 +62,7 @@ exports.getPackages = async (req, res, next) => {
     }  
 
     try{
+        //join cluster table with drivers to find which postcodes is responsible every driver
         const join = await Driver.findAll({
             include: [ 
                 {
@@ -75,6 +79,7 @@ exports.getPackages = async (req, res, next) => {
 
         statusFilter = filter ? {status: filter} : {}
 
+        //find which packages belong to each driver
         for (const driver of join) {
             const clusterPosts = driver.cluster.dataValues.postcode;
             const packages = await Package.findAll({
@@ -91,14 +96,17 @@ exports.getPackages = async (req, res, next) => {
                     },
                     status: statusFilter.status ? statusFilter.status: {[Op.ne]: null}
                 },
-                order: [['status', 'ASC']],
+                order: [['status', 'ASC']], //to have the pending packges first
             });
+
             var pending = 0;
+
             packages.forEach(package => {
 
                 if (package.dataValues.status == Status.PENDING){
                     pending +=1;
                 }
+                //we have diplay for each package where belongs and the status of each one
                 driverPackages.push({
                             driver: driver.name,
                             voucher: package.dataValues.voucher,
@@ -107,7 +115,7 @@ exports.getPackages = async (req, res, next) => {
                 })
                     
             });
-            
+            //find which drivers have take all the packages and are ready
             if (pending==0 && filter != Status.SCANNED){
                 ready.push({
                     name: driver.name

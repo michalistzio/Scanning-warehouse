@@ -5,6 +5,7 @@ const {Package} = require('../models/package');
 
 exports.reset = async(req, res, next) => {
     
+    //fill the db
     const clusters = [
         {id: 'A', postcode: 10},
         {id: 'B', postcode: 11},
@@ -31,6 +32,7 @@ exports.reset = async(req, res, next) => {
     ];
 
     try{
+        //if db has data,then destroy them and after reset them
         await Cluster.destroy({
             where: {}
           });

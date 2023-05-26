@@ -1,6 +1,6 @@
 const express = require('express');
 
-const sequelize = require('./util-helpers/db');
+const db = require('./util-helpers/db');
 const errorController = require('./controllers/404');
 
 const dataIntsRoutes = require('./routes/data_init');
@@ -46,7 +46,7 @@ Driver.belongsTo(Cluster, {
 });
 // Cluster.hasMany(Driver);
 
-sequelize
+db
 // .sync({force: true}) // to overwrite the table 
     .sync()
     .then(() => {
