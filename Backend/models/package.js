@@ -1,6 +1,11 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../util-helpers/db');
 
+const Status = {
+    PENDING: 'PENDING',
+    SCANNED: 'SCANNED'
+};
+
 const Package = sequelize.define('package', {
     voucher: {
         type: DataTypes.STRING,
@@ -12,13 +17,13 @@ const Package = sequelize.define('package', {
         allowNull: false,
     },
     status: {
-        type: DataTypes.ENUM('PENDING', 'SCANNED'),
+        type: DataTypes.ENUM(Status.PENDING, Status.SCANNED),
         allowNull: false,
-        defaultValue: 'PENDING',
+        defaultValue: Status.PENDING,
     }
 },{
     // Disable timestamps
    timestamps: false,
 });
 
-module.exports = Package;
+module.exports = { Package, Status };

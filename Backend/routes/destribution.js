@@ -4,8 +4,6 @@ const router = express.Router();
 
 const destributionController = require('../controllers/destribution');
 
-router.get('/pick-up', destributionController.getPickUpPackages);
-
 router.put('/scan', 
     [
         body('voucher')
@@ -15,6 +13,6 @@ router.put('/scan',
     destributionController.putScan
 );
 
-router.get('/remain-packages', destributionController.getRemainPackages);
+router.get('/packages', destributionController.getPackages);
 
 module.exports = router;
