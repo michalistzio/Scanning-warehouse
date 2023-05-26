@@ -1,4 +1,4 @@
-#Scanning Warehouse
+# Scanning Warehouse
 
 Scanning Warehouse is a web application that allows you to have supervision in your warehouse. Also distibutes the packages to the drivers and you have the ability to know in real time who driver is ready to deliver the packages and which packages haven't scanned.
 
