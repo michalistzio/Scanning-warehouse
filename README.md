@@ -17,7 +17,7 @@ Scanning Warehouse is a web application that allows you to supervise your wareho
 ```javascript
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('your_db', 'postgres', 'your_password', {
+const sequelize = new Sequelize('warehouse', 'postgres', 'your_password', {
   host: 'localhost',
   dialect: 'postgres', 
 });
