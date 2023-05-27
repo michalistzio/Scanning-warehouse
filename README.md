@@ -12,7 +12,7 @@ Scanning Warehouse is a web application that allows you to supervise your wareho
 1. Clone the repository.
 2. Run `npm install` in the Backend and Frontend folders to install the required packages.
 3. Create a warehouse database in PostgreSQL.
-4. Create a `util-helpers` folder and inside it create a file named `db.js`. Add the following code to the file:
+4. Create a `util-helpers` folder and inside it create a file named `db.js`. Add the following code to the file and modified to run it in your postgres:
 
 ```javascript
 const Sequelize = require('sequelize');
