@@ -19,7 +19,8 @@ const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize('warehouse', 'postgres', 'your_password', {
   host: 'localhost',
-  dialect: 'postgres', 
+  dialect: 'postgres',
+  logging: false, // Set logging to false to avoid verbose output 
 });
 
 module.exports = sequelize;
