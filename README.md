@@ -38,6 +38,6 @@ To test the application, follow these steps:
 1. Start by pressing the reset button to fill the database with data.
 2. Scan packages using the voucher code in the scan field.
 3. Whenever you check the 'Pending' checkbox, the array will update to show only the pending items. When it is unchecked, all the items will be displayed.
-4. You can check the scanned packages at any time.
+4. You can check the scanned packages at any time with scanned button.
 5. Once you have scanned all the pending packages for a driver, the driver will immediately appear in the ready drivers array.
 6. To reset all the data, use the reset button.
