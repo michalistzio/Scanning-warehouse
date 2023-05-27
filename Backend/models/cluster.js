@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../util-helpers/db');
+const sequelize= require('../util-helpers/db');
 
 const Cluster = sequelize.define('cluster', {
     id: {
@@ -11,9 +11,11 @@ const Cluster = sequelize.define('cluster', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-},{
+}
+,{
     // Disable timestamps
    timestamps: false,
 });
+
 
 module.exports = Cluster;

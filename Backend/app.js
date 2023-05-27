@@ -1,18 +1,24 @@
 const express = require('express');
 
-const db = require('./util-helpers/db');
+const sequelize = require('./util-helpers/db');
 const errorController = require('./controllers/404');
 
-const dataIntsRoutes = require('./routes/data_init');
+const dataInitsRoutes = require('./routes/data_init');
 const destributionRoutes = require('./routes/destribution');
 const bodyParser = require('body-parser');
 
 //models
 const Cluster = require('./models/cluster');
 const Driver = require('./models/driver');
-const Package = require('./models/package');
 
 const app = express();
+
+//associations
+Driver.belongsTo(Cluster, {
+    foreignKey: 'clusterId',
+    constraint: true,
+    onDelete: 'CASCADE'
+});
 
 app.use(bodyParser.json());
 
@@ -25,7 +31,7 @@ app.use((req, res, next) => {
 });
 
 // Use the routes
-app.use(dataIntsRoutes)
+app.use(dataInitsRoutes)
 app.use(destributionRoutes)
 app.use(errorController.get404); 
 
@@ -38,16 +44,7 @@ app.use((error, req, res, next) => {
     res.status(status).json({message: message, data: data});
 });
 
-
-Driver.belongsTo(Cluster, {
-    foreignKey: 'clusterId',
-    constraint: true,
-    onDelete: 'CASCADE'
-});
-// Cluster.hasMany(Driver);
-
-db
-// .sync({force: true}) // to overwrite the table 
+sequelize
     .sync()
     .then(() => {
     console.log('Database synchronized');

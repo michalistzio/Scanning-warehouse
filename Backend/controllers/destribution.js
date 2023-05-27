@@ -29,7 +29,8 @@ exports.putScan = async (req, res, next) => {
         //if the package has scanned it can not scanned again
         if (scaned.dataValues.status == Status.SCANNED){
             const error = new Error(`The item has already scanned!`);
-            error.statusCode = 404;
+            //HTTP status code 409 Conflict
+            error.statusCode = 409;
             throw error;
         }
 

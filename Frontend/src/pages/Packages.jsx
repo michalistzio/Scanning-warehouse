@@ -7,6 +7,12 @@ import { InputGroup, FormControl, Button, Row, Col, Container, Form } from 'reac
 
 const Packages = () => {
 
+    const checkboxStyle = {
+        display: 'flex',
+        alignItems: 'center',
+      };
+
+    // const [isScanned, setIsScanned] = useState(false);
     const [packages, setPackages] = useState([]);
     const [drivers, setDrivers] = useState([]);
     const [inputVoucher, setInputVoucher] = useState('');
@@ -27,11 +33,17 @@ const Packages = () => {
 
     useEffect(() => {
         fetchData();
-    },[isPending]);
+    });
 
-    const pendingPackages = () => {
-        const change = !isPending
-        setIsPending(change);
+    const pendingPackages = (event) => {
+        const isChecked = event.target.checked;
+        if (isChecked) {
+        // Function to execute when checkbox is checked
+            setIsPending(true);
+        } else {
+        // Function to execute when checkbox is unchecked
+            setIsPending(false);
+        }
         fetchData();
     }
 
@@ -53,10 +65,11 @@ const Packages = () => {
             }
               fetchData();
               setError('')
+              setInputVoucher('');
             })
             .catch(error => {
                 console.log(error);
-              setError(`An error occurred. Please try again`);
+                setError(`An error occurred. Please try again`);
             });
     }
 
@@ -81,7 +94,7 @@ const Packages = () => {
                 <div className="col-sm-4 pe-5">
                     <InputGroup>
                         <FormControl value={inputVoucher} 
-                            onChange={(e) => setInputVoucher(e.target.value) } 
+                            onChange={(e) => setInputVoucher(e.target.value)} 
                             onKeyDown={(e) => {if (e.key === 'Enter') {scanItem();}}} 
                             placeholder="Scan package here" />
                         <Button onClick={scanItem} variant="primary">Scan</Button>
@@ -91,6 +104,13 @@ const Packages = () => {
                 </div>
             </div>
             <div className="container text-center p-3">
+                <Form.Check
+                    type="checkbox"
+                    label="Pending"
+                    id="myCheckbox"
+                    onChange={pendingPackages}
+                    style={checkboxStyle}
+                />
                 <Table striped hover>
                     <thead>
                         <tr>
@@ -132,9 +152,7 @@ const Packages = () => {
                     <Col sm={4}>
                         <Button onClick={resetDb} variant="danger">Reset</Button>
                     </Col>
-                    <Col sm={4} className="text-center">
-                        <Button onClick = {pendingPackages} variant="primary">Pending or All</Button>
-                    </Col>
+                    <Col sm={4} className="text-center"></Col>
                     <Col sm={4} className="text-end">
                         <Button variant="primary">
                             <Link to={'/scanned'} style={{ color: 'white' }}>Scanned</Link>
